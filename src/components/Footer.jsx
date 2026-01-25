@@ -77,8 +77,9 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="mt-20 pt-8 border-t border-white/5 text-center text-gray-500 text-xs uppercase tracking-[0.3em]">
+                <div className="mt-20 pt-8 border-t border-white/5 text-center text-gray-500 text-xs uppercase tracking-[0.3em] space-y-2">
                     <p>&copy; {new Date().getFullYear()} Wala Atyab. {t('common.copyright')}</p>
+                    <p className="lowercase tracking-normal opacity-50">made by simply yousef</p>
                 </div>
             </div>
         </footer>
