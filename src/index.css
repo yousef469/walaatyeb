@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-gold: #e6c24d;
+  --color-brand-dark: #1a1a1a;
+  --color-brand-grey: #4a4a4a;
+  --color-glass-bg: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background-color: var(--color-brand-dark);
+    color: white;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  [dir="rtl"] {
+    font-family: 'Inter', 'Noto Sans Arabic', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(197, 160, 89, 0.3);
+    transform: translateY(-4px);
+  }
+
+  .btn-primary {
+    @apply px-8 py-3 bg-brand-gold text-brand-dark font-bold rounded-full transition-all hover:scale-105 active:scale-95;
+  }
+
+  .btn-outline {
+    @apply px-8 py-3 border border-brand-gold text-brand-gold font-bold rounded-full transition-all hover:bg-brand-gold hover:text-brand-dark active:scale-95;
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom transitions for language switching */
+.lang-fade-enter {
+  opacity: 0;
+}
+
+.lang-fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5a059;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a58049;
+}
