@@ -8,12 +8,9 @@ const Hero = ({ heroImage = null }) => {
         <section className="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
-                {heroImage ? (
-                    <img src={heroImage} alt="Cafe Background" className="w-full h-full object-cover" />
-                ) : (
-                    <div className="w-full h-full bg-brand-dark" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/60 to-brand-dark z-10" />
+                <img src="/hero-bg.png" alt="Cafe Background" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/70 to-brand-dark z-10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/80 via-transparent to-brand-dark/80 z-10" />
             </div>
 
             {/* Decorative Blur Elements */}

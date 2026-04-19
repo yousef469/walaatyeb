@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Phone, Clock, MapPin, MessageCircle } from 'lucide-react';
+import { Phone, Clock, MapPin, MessageCircle, Navigation } from 'lucide-react';
 
-const Footer = () => {
+const Footer = ({ onOpenMap }) => {
     const { t } = useTranslation();
 
-    const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=21.555657606809795,39.13224252554113";
     const whatsappUrl = "https://wa.me/966501533416";
 
     return (
@@ -65,21 +64,20 @@ const Footer = () => {
                                 <MessageCircle className="w-5 h-5" />
                                 <span>{t('contact.phone')}</span>
                             </a>
-                            <a
-                                href={googleMapsUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-brand-gold text-sm font-bold underline underline-offset-4 hover:opacity-80 transition-opacity"
+                            <button
+                                onClick={onOpenMap}
+                                className="btn-outline flex items-center justify-center gap-2 w-full md:w-fit text-sm"
                             >
-                                {t('contact.map')}
-                            </a>
+                                <Navigation className="w-4 h-4" />
+                                <span>{t('contact.map')}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-20 pt-8 border-t border-white/5 text-center text-gray-500 text-xs uppercase tracking-[0.3em] space-y-2">
+                <div className="mt-20 pt-8 border-t border-white/5 text-center text-gray-500 text-xs uppercase tracking-[0.3em] space-y-3">
                     <p>&copy; {new Date().getFullYear()} Wala Atyab. {t('common.copyright')}</p>
-                    <p className="lowercase tracking-normal opacity-50">made by simply yousef</p>
+                    <p className="lowercase tracking-normal text-sm font-medium opacity-60">made by simply yousef</p>
                 </div>
             </div>
         </footer>

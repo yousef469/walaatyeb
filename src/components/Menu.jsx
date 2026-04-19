@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import GlassCard from './GlassCard';
+import {
+    Soup, Salad, UtensilsCrossed, Flame, ChefHat, Sandwich, Pizza,
+    Coffee, CupSoda, Wine, IceCream
+} from 'lucide-react';
 
 const menuItems = [
     // --- SOUP ---
@@ -184,78 +187,128 @@ const menuItems = [
     { id: 1507, category: 'dessert', price: '29', name_en: 'Nutella Manakish', name_ar: 'مناقيش نوتيلا' },
 ];
 
+const categoryIcons = {
+    soup: Soup,
+    salad: Salad,
+    appetizers: UtensilsCrossed,
+    grills: Flame,
+    tawajeen: ChefHat,
+    sandwiches: Sandwich,
+    manakish: Pizza,
+    pizza: Pizza,
+    pasta: ChefHat,
+    cold_drinks: CupSoda,
+    fresh_juices: Wine,
+    cocktails: Wine,
+    hot_drinks: Coffee,
+    cold_coffee: Coffee,
+    dessert: IceCream,
+};
+
 const Menu = () => {
     const { t, i18n } = useTranslation();
-    const [activeCategory, setActiveCategory] = useState('all');
+    const [activeCategory, setActiveCategory] = useState('grills');
     const currentLang = i18n.language;
 
-    const categories = ['all', 'soup', 'salad', 'appetizers', 'grills', 'tawajeen', 'sandwiches', 'manakish', 'pizza', 'pasta', 'cold_drinks', 'fresh_juices', 'cocktails', 'hot_drinks', 'cold_coffee', 'dessert'];
+    const categories = ['soup', 'salad', 'appetizers', 'grills', 'tawajeen', 'sandwiches', 'manakish', 'pizza', 'pasta', 'cold_drinks', 'fresh_juices', 'cocktails', 'hot_drinks', 'cold_coffee', 'dessert'];
 
-    const filteredItems = activeCategory === 'all'
-        ? menuItems
-        : menuItems.filter(item => item.category === activeCategory);
+    const filteredItems = menuItems.filter(item => item.category === activeCategory);
 
     return (
-        <section id="menu" className="py-24 px-6 bg-brand-dark/50">
-            <div className="max-w-7xl mx-auto">
-                <h2 className="text-4xl md:text-6xl font-black text-center mb-12 uppercase tracking-tighter">
-                    {t('menu.title')}
-                </h2>
+        <section id="menu" className="py-24 relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/95 to-brand-dark" />
+            <div className="absolute top-1/4 -left-32 w-64 h-64 bg-brand-gold/5 rounded-full blur-[100px]" />
+            <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-brand-gold/5 rounded-full blur-[100px]" />
 
-                {/* Category Filter Blocks */}
-                <div className="flex flex-nowrap md:flex-wrap justify-start md:justify-center gap-3 mb-16 px-4 overflow-x-auto no-scrollbar pb-4 md:pb-0">
-                    {categories.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveCategory(cat)}
-                            className="relative px-6 py-2 rounded-full text-xs md:text-sm font-bold transition-colors uppercase tracking-widest group whitespace-nowrap min-w-fit"
-                        >
-                            {activeCategory === cat && (
-                                <motion.div
-                                    layoutId="activeCategory"
-                                    className="absolute inset-0 bg-brand-gold rounded-full shadow-[0_0_20px_rgba(230,194,77,0.3)]"
-                                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                />
-                            )}
-                            <span className={`relative z-10 transition-colors duration-300 ${activeCategory === cat
-                                ? 'text-brand-dark'
-                                : 'text-gray-400 group-hover:text-white'
-                                }`}>
-                                {t(`menu.${cat}`)}
-                            </span>
-                        </button>
-                    ))}
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-16"
+                >
+                    <span className="text-brand-gold font-bold uppercase tracking-widest text-sm mb-4 block">
+                        {t('menu.subtitle')}
+                    </span>
+                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
+                        {t('menu.title')}
+                    </h2>
+                </motion.div>
+
+                {/* Category Filter */}
+                <div className="flex flex-nowrap md:flex-wrap justify-start md:justify-center gap-3 mb-12 px-4 overflow-x-auto no-scrollbar pb-4 md:pb-0">
+                    {categories.map((cat) => {
+                        const Icon = categoryIcons[cat];
+                        return (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveCategory(cat)}
+                                className="relative px-5 py-3 rounded-xl text-xs md:text-sm font-bold transition-all uppercase tracking-widest group whitespace-nowrap min-w-fit flex items-center gap-2 glass-panel border-white/5 hover:border-white/20"
+                            >
+                                {activeCategory === cat && (
+                                    <motion.div
+                                        layoutId="activeCategoryBg"
+                                        className="absolute inset-0 bg-brand-gold rounded-xl"
+                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                    />
+                                )}
+                                <Icon className={`relative z-10 w-4 h-4 transition-colors ${activeCategory === cat ? 'text-brand-dark' : 'text-brand-gold'}`} />
+                                <span className={`relative z-10 transition-colors duration-300 ${activeCategory === cat ? 'text-brand-dark' : 'text-gray-400 group-hover:text-white'}`}>
+                                    {t(`menu.${cat}`)}
+                                </span>
+                            </button>
+                        );
+                    })}
                 </div>
 
+                {/* Menu Grid */}
                 <motion.div
                     layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]"
+                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3"
                 >
                     <AnimatePresence mode="popLayout">
-                        {filteredItems.map((item) => (
+                        {filteredItems.map((item, index) => (
                             <motion.div
                                 key={item.id}
                                 layout
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.3 }}
+                                transition={{ duration: 0.2, delay: index * 0.01 }}
+                                className="group"
                             >
-                                <GlassCard className="h-full">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <h4 className="text-xl font-bold">
-                                            {currentLang === 'en' ? item.name_en : item.name_ar}
-                                        </h4>
-                                        <span className="text-brand-gold font-bold text-lg">{item.price}</span>
+                                <div className="glass-panel p-3 rounded-lg border-white/5 hover:border-brand-gold/30 transition-all duration-300 hover:-translate-y-0.5">
+                                    <div className="flex items-start justify-between gap-2">
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-sm font-bold leading-tight group-hover:text-brand-gold transition-colors line-clamp-2">
+                                                {currentLang === 'en' ? item.name_en : item.name_ar}
+                                            </h4>
+                                        </div>
+                                        <div className="flex items-center gap-1 shrink-0">
+                                            <span className="text-brand-gold font-bold text-sm">{item.price}</span>
+                                        </div>
                                     </div>
-                                    <p className="text-gray-400 text-xs uppercase tracking-tighter font-medium">
+                                    <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1 truncate">
                                         {t(`menu.${item.category}`)}
                                     </p>
-                                </GlassCard>
+                                </div>
                             </motion.div>
                         ))}
                     </AnimatePresence>
                 </motion.div>
+
+                {/* Empty State */}
+                {filteredItems.length === 0 && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-center py-20"
+                    >
+                        <p className="text-gray-500">{t('menu.noItems')}</p>
+                    </motion.div>
+                )}
             </div>
         </section>
     );
